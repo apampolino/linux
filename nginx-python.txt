@@ -1,0 +1,66 @@
+
+NGINX - DJANGO(PYTHON)
+
+install the ff. per linux distro
+
+REDHAT
+
+openssl openssl-devel
+
+sqlite sqlite-devel
+
+zlib zlib-devel
+
+groupinstall 'Development Tools'
+
+DEBIAN
+
+build-essentials
+
+install and download python 2.7.12
+
+install pip
+
+install virtualenv
+
+check http://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html
+
+add to project/settings.py
+    STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+create and link(ln -s) django.conf to etc/nginx/conf.d/
+    server {
+        listen      8000;
+        server_name django.nginx;
+        charset     utf-8;
+
+        location /media  {
+            alias /home/www-data/html/python/myenv/mysite/mysite/media;
+        }
+
+        location /static {
+            alias /home/www-data/html/python/myenv/mysite/mysite/static;
+        }
+
+        location / {
+            uwsgi_pass  unix:/tmp/uwsgi.sock;
+            include     /home/www-data/html/python/myenv/mysite/uwsgi_params; # the uwsgi_params file you installed
+        }
+    }
+
+create uwsgi.ini
+    [uwsgi]
+    http = :8000
+    pythonpath  = /home/www-data/html/python/myenv/mysite/mysite
+    chdir           = /home/www-data/html/python/myenv/mysite
+    module          = mysite.wsgi
+    home            = /home/www-data/html/python/myenv
+    master      = true
+    #processes       = 10
+    chmod-socket    = 755
+    chown-socket    = uwsgi
+    uid             = uwsgi
+    vacuum          = true
+
+run uwsgi
+    /path/to/virtualenv/bin/uwsgi --ini /path/to/virtualenv/project/uwsgi.ini

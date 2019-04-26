@@ -1,0 +1,14 @@
+# copy to /etc/systemd/system/
+# start systemctl enable/start nodeserver
+[Unit]
+Description=NodeJS Web Server
+
+[Service]
+Type=simple
+Restart=always
+User=nodejs
+Group=nodejs
+ExecStart=/usr/local/bin/node /home/nodejs/apps/myapp/bin/www
+
+[Install]
+WantedBy=multi-user.target

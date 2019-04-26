@@ -1,0 +1,72 @@
+NGINX - PHP
+
+yum install nginx
+yum install php5.6 or 7.0
+yum install php56-fpm or php7-fpm
+
+edit /etc/nginx/conf.d/default.conf
+    server {
+    
+        listen  80;
+
+        server_name localhost.nginx;
+
+        root /home/www-data/html;
+
+        index index.php index.html index.htm;
+
+        server_tokens off;
+
+        charset utf-8;
+
+        access_log  /var/log/nginx/access.log  main;
+
+        error_log  /var/log/nginx/error.log;
+
+        location / {
+            try_files $uri $uri/ @fallback;
+        }
+
+        location @fallback {
+            rewrite  ^(.*[^/])$ /$1 permanent;
+        }
+
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+            proxy_read_timeout 61;
+            fastcgi_read_timeout 61;
+            fastcgi_pass   127.0.0.1:9000;
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include   /etc/nginx/fastcgi_params;
+        }
+
+        error_page  404              /404.html;
+
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+
+        location = /50x.html {
+            root   /usr/share/nginx/html;
+        }
+
+        # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+        #
+        #location ~ \.php$ {
+        #    proxy_pass   http://127.0.0.1:80;
+        #}
+
+        # deny access to .htaccess files, if Apache's document root
+        # concurs with nginx's one
+        #
+        location ~ /\.ht {
+            deny  all;
+        }
+    }
+
+go to nginx fastcgi for php for configurations
+https://www.nginx.com/resources/wiki/start/topics/examples/full/
+https://www.nginx.com/resources/wiki/start/topics/recipes/codeigniter/
+https://www.nginx.com/resources/wiki/start/topics/examples/phpfcgi/

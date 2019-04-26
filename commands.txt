@@ -1,0 +1,181 @@
+##################################################################################
+vagrant
+##################################################################################
+
+vagrant up <boxname>
+vagrant halt <boxname>
+vagrant reload <boxname>
+
+vagrant plugin install vagrant-vbguest
+vagrant plugin install vagrant-faster
+
+##################################################################################
+git
+##################################################################################
+
+git clone <repository>
+git pull
+git status
+git add <file>
+git add --all
+git commit -m "<message>"
+git push origin <branch>
+
+git checkout <branchname>
+git checkout -b <branchname> - create new branch based on current branch
+
+git reset - resets all commits
+git clean -fx - remove untracked files 
+git rm <file> - remove file
+git stash save "message" - stash changes
+git stash list - list stashes
+git stash clear - delete all stashes
+git stash apply <list id> - apply stash to your current branch
+git merge <branch> - merge a branch to your current branch
+git remote -v - checks url for remote repository
+git remote set-url origin <url> - set url for remote repository
+git config --global --list - list global configurations
+
+git golden rule - pull commit push
+
+##################################################################################
+linux
+##################################################################################
+
+command --help - show help commands
+su - root account, will ask for password "vagrant"
+vi /path/to/file - file editor
+mkdir <foldername>
+mkdir -p <foldername>/<foldername> - output /foldername1/foldername2
+cp /path/to/file /destination - single file
+cp -Rv /path/to/folder /destination
+mv /path/to/file /destination
+mv /path/to/file /destination/new/filename - rename
+rm file - will ask to delete the file
+rm -rf /path/to/folder - recursive deletion of files
+ls - list files/folders
+ls -ltrah - list files/folders with attributes
+head -n 1 /path/to/file - read first line of file, n line count
+tail -n 1 /path/to/file - read last line of file, n line count
+tail -f /path/to/file - read current line of file
+sed -i 'word' /path/to/file - search word in a file
+sed -i 's/word/new word/' /path/to/file - search word in a file
+cat /path/to/file - print out content of a file terminal
+cat /path/to/file >> /path/to/sample.txt - copy contents of file to sample.txt
+df -h - list drives
+tune2fs -m 1 /dev/<drive path> ex. /dev/sda1 - reset df status
+du -sh - list folders with human readable size
+| - pipe 
+&& - execute next command, yum update && yum upgrade
+grep - regex, ls | grep <regex>
+find /path/to/location -options regex/or/match/or/filename - https://www.tecmint.com/35-practical-examples-of-linux-find-command/
+tee - prints output to terminal and writes to a file, ls | tee sample.txt
+
+history - shows all commands executed
+!<no> - execute command from history
+
+chmod +x /path/to/executable/file
+
+chmod 755 <file> - file permission
+chmod 755 -Rv /folder
+
+chown user:group <file> - file ownership
+chown user:group -Rv /folder
+
+useradd <username> - create user
+passwd <username> - change password
+userdel <username> - delete user
+/home/<username> - manually delete user folder
+addgroup <groupname>
+usermod -a -G <groupname> <user> - add user to the group
+
+do not execute commands that you dont know well, research!
+
+# selinux
+getenforce - check selinux settings
+setenforce 0 - set selinux permission to permissive from enforcing
+
+# selinux configuration files
+/etc/selinux/config - change "enforcing" to disabled
+
+# apache
+service httpd start
+service httpd stop
+service httpd restart
+service httpd configtest - test configuration files
+
+# apache configuration files
+
+/etc/httpd/conf/httpd.conf - apache configuration file
+/etc/httpd/conf.d/web1.conf/or/vhosts.conf - apache virtual hosts configuration file
+/etc/httpd/conf.d/php56-php.conf - php configuration file or apache
+/etc/httpd/conf.d/php72-php.conf - php configuration file or apache
+
+# apache logs
+/var/log/httpd/<file>.log
+
+# mysql
+service mysqld start
+service mysqld stop
+service mysqld restart
+
+mysqldump -u user -p -v database > database.sql - backup database
+mysqldump -u user -p -v -A > all_database.sql - backup database
+mysql -u user -p -v database < database.sql - restore database
+
+# php
+php -S <ip>:<port> -t /public/folder/to/start/ - use php server
+php -v - php version
+
+# php configuration file
+/etc/php.ini
+
+# postfix
+service postfix start
+service postfix stop
+service postfix restart
+
+postqueue -p - list mail messages
+postfix -f - flush or purge
+postsuper -d deferred - delete all deferred mails
+postsuper -d <message_id> - delete message id
+
+# postfix configuration files
+/etc/postfix/main.cf
+/etc/postfix/master.cf
+
+# systemd add new service
+/lib/systemd/system/myservice.service
+
+# mailq
+mailq
+
+# rsync
+rsync -avh --progress --append-verify /source /destination
+rsync -avh --progress --append-verify /source user@<ip>:/path/to/destination
+
+#vi
+<insert> - insert/replace
+<esc> - remove cursor from editing
+
+<esc> + option
+*option
+/<word> - find word in file
+
+<shift> + : + option
+*option
+wq - save with changes
+q! - quit and discard changes
+q - quit
+
+# yum/cnf
+yum search <package> - search
+yum install <package> - install
+yum remove <package> - remove
+yum install <package> --enablerepo=remi-php72 - enable repositories
+yum update - update libraries
+yum upgrade - upgrade libraries
+
+# nginx
+https://drive.google.com/drive/folders/0B5Me2XemwlWQNXoxTC1NLUtVV1U
+
